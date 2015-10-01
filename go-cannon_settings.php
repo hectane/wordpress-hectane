@@ -7,21 +7,6 @@
 class GoCannonOptions {
 
     /**
-     * Global instance.
-     */
-    private static $instance;
-
-    /**
-     * Obtain the global instance or create it if it doesn't exist.
-     */
-    public static function get() {
-        if(self::$instance === null) {
-            self::$instance = new GoCannonOptions();
-        }
-        return self::$instance;
-    }
-
-    /**
      * Default values for all options.
      */
     private static $defaults = array(
@@ -33,19 +18,19 @@ class GoCannonOptions {
     );
 
     /**
+     * Obtain the current value for the specified option.
+     */
+    public static function get($name) {
+        $o = get_option('go-cannon_settings');
+        return isset($o[$name]) ? $o[$name] : self::$defaults[$name];
+    }
+
+    /**
      * Initialize the plugin by setting up hooks.
      */
     public function __construct() {
         add_action('admin_init', array($this, 'register_settings'));
         add_action('admin_menu', array($this, 'add_options_page'));
-    }
-
-    /**
-     * Retrieve the current value for the specified option.
-     */
-    public function get_option($name) {
-        $o = get_option('go-cannon_settings');
-        return isset($o[$name]) ? $o[$name] : self::$defaults[$name];
     }
 
     /**
@@ -119,7 +104,7 @@ class GoCannonOptions {
             '<input type="text" id="%s" name="go-cannon_settings[%s]" value="%s">',
             esc_attr($args[0]),
             esc_attr($args[0]),
-            esc_attr($this->get_option($args[0]))
+            esc_attr(self::get($args[0]))
         );
     }
 
@@ -131,7 +116,7 @@ class GoCannonOptions {
             '<input type="checkbox" id="%s" name="go-cannon_settings[%s]" %s>',
             esc_attr($args[0]),
             esc_attr($args[0]),
-            $this->get_option($args[0]) ? 'checked="checked"' : ''
+            self::get($args[0]) ? 'checked="checked"' : ''
         );
     }
 
