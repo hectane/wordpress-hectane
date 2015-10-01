@@ -13,6 +13,9 @@ License URI: https://opensource.org/licenses/MIT
 
 require_once plugin_dir_path(__FILE__) . 'go-cannon_settings.php';
 
+// Ensure the global instance is created
+GoCannonOptions::get();
+
 /**
  * Override the default implementation of wp_mail().
  *
