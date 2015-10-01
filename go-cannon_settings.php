@@ -1,15 +1,30 @@
 <?php
 
 /**
- * Manage options for the plugin, including the options page that allows the
- * connection settings to be configured.
+ * Manage options for the plugin including the page that allows the connection
+ * settings to be configured.
  */
 class GoCannonOptions {
 
     /**
+     * Global instance.
+     */
+    private static $instance;
+
+    /**
+     * Obtain the global instance or create it if it doesn't exist.
+     */
+    public static function get() {
+        if(self::$instance === null) {
+            self::$instance = new GoCannonOptions();
+        }
+        return self::$instance;
+    }
+
+    /**
      * Default values for all options.
      */
-    private $defaults = array(
+    private static $defaults = array(
         'host' => 'localhost',
         'port' => '8025',
         'tls' => '0',
@@ -30,7 +45,7 @@ class GoCannonOptions {
      */
     public function get_option($name) {
         $o = get_option('go-cannon_settings');
-        return isset($o[$name]) ? $o[$name] : $this->defaults[$name];
+        return isset($o[$name]) ? $o[$name] : self::$defaults[$name];
     }
 
     /**
