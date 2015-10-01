@@ -3,7 +3,7 @@
 /*
 Plugin Name: go-cannon
 Plugin URI: https://github.com/nathan-osman/wordpress-go-cannon
-Description: Deliver all Wordpress emails via go-cannon.
+Description: Deliver all WordPress emails via go-cannon.
 Version: 0.1.0
 Author: Nathan Osman
 Author URI: https://quickmediasolutions.com
@@ -31,7 +31,7 @@ function wp_mail($to, $subject, $message, $headers='', $attachments=array()) {
         $to = array($to);
     }
     $payload = json_encode(array(
-        'from' => sprintf('Wordpress <wordpress@%s>', $_SERVER['SERVER_NAME']),
+        'from' => sprintf('WordPress <wordpress@%s>', $_SERVER['SERVER_NAME']),
         'to' => is_array($to) ? $to : array($to),
         'subject' => $subject,
         'text' => $message,

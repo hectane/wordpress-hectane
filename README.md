@@ -1,3 +1,3 @@
-## go-cannon Wordpress Plugin
+## go-cannon WordPress Plugin
 
-This plugin provides an extremely easy way to route Wordpress emails through [go-cannon](https://github.com/nathan-osman/go-cannon).
+This plugin provides an extremely easy way to route WordPress emails through [go-cannon](https://github.com/nathan-osman/go-cannon).
