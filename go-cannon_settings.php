@@ -18,19 +18,19 @@ class GoCannonOptions {
     );
 
     /**
-     * Retrieve the current value for the specified option.
-     */
-    private function get_option($name) {
-        $o = get_option('go-cannon_settings');
-        return isset($o[$name]) ? $o[$name] : $this->defaults[$name];
-    }
-
-    /**
      * Initialize the plugin by setting up hooks.
      */
     public function __construct() {
         add_action('admin_init', array($this, 'register_settings'));
         add_action('admin_menu', array($this, 'add_options_page'));
+    }
+
+    /**
+     * Retrieve the current value for the specified option.
+     */
+    public function get_option($name) {
+        $o = get_option('go-cannon_settings');
+        return isset($o[$name]) ? $o[$name] : $this->defaults[$name];
     }
 
     /**
