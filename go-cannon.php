@@ -19,23 +19,26 @@ if(is_admin()) {
     new GoCannonOptions();
 }
 
-/**
- * Override the default implementation of wp_mail().
- *
- * This function is responsible for marshalling the parameters into the JSON
- * data that is sent to go-cannon.
- */
-function wp_mail($to, $subject, $message, $headers='', $attachments=array()) {
-    if(!is_array($to)) {
-        $to = array($to);
+// Only override the wp_mail() function if it doesn't exist
+if (!function_exists('wp_mail')) {
+    /**
+     * Override the default implementation of wp_mail().
+     *
+     * This function is responsible for marshalling the parameters into the JSON
+     * data that is sent to go-cannon.
+     */
+    function wp_mail($to, $subject, $message, $headers='', $attachments=array()) {
+        if(!is_array($to)) {
+            $to = array($to);
+        }
+        $email = array(
+            'from' => sprintf('WordPress <wordpress@%s>', $_SERVER['SERVER_NAME']),
+            'to' => is_array($to) ? $to : array($to),
+            'subject' => $subject,
+            'text' => $message,
+        );
+        return GoCannonAPI::instance()->send($email);
     }
-    $email = array(
-        'from' => sprintf('WordPress <wordpress@%s>', $_SERVER['SERVER_NAME']),
-        'to' => is_array($to) ? $to : array($to),
-        'subject' => $subject,
-        'text' => $message,
-    );
-    return GoCannonAPI::instance()->send($email);
 }
 
 ?>
