@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Manage options for the plugin including the page that allows the connection
+ * Manage settings for the plugin including the page that allows the connection
  * settings to be configured.
  */
-class GoCannonOptions {
+class HectaneSettings {
 
     /**
      * Default values for all options.
@@ -21,7 +21,7 @@ class GoCannonOptions {
      * Obtain the current value for the specified option.
      */
     public static function get($name) {
-        $o = get_option('go-cannon_settings');
+        $o = get_option('hectane_settings');
         return isset($o[$name]) ? $o[$name] : self::$defaults[$name];
     }
 
@@ -38,54 +38,54 @@ class GoCannonOptions {
      */
     public function register_settings() {
         add_settings_section(
-            'go-cannon_connection_settings',
+            'hectane_connection_settings',
             'Connection Settings',
             array($this, 'connection_settings_callback'),
-            'go-cannon'
+            'hectane'
         );
         add_settings_field(
             'host',
             'Host',
             array($this, 'text_field_callback'),
-            'go-cannon',
-            'go-cannon_connection_settings',
+            'hectane',
+            'hectane_connection_settings',
             array('host')
         );
         add_settings_field(
             'port',
             'Port',
             array($this, 'text_field_callback'),
-            'go-cannon',
-            'go-cannon_connection_settings',
+            'hectane',
+            'hectane_connection_settings',
             array('port')
         );
         add_settings_field(
             'tls',
             'Use TLS',
             array($this, 'checkbox_field_callback'),
-            'go-cannon',
-            'go-cannon_connection_settings',
+            'hectane',
+            'hectane_connection_settings',
             array('tls')
         );
         add_settings_field(
             'username',
             'Username',
             array($this, 'text_field_callback'),
-            'go-cannon',
-            'go-cannon_connection_settings',
+            'hectane',
+            'hectane_connection_settings',
             array('username')
         );
         add_settings_field(
             'password',
             'Password',
             array($this, 'text_field_callback'),
-            'go-cannon',
-            'go-cannon_connection_settings',
+            'hectane',
+            'hectane_connection_settings',
             array('password')
         );
         register_setting(
-            'go-cannon_settings',
-            'go-cannon_settings'
+            'hectane_settings',
+            'hectane_settings'
         );
     }
 
@@ -93,7 +93,7 @@ class GoCannonOptions {
      * Render the label for the connection section.
      */
     public function connection_settings_callback() {
-        echo '<p>These settings are used to connect to the go-cannon client.</p>';
+        echo '<p>These settings are used to connect to the Hectane client.</p>';
     }
 
     /**
@@ -101,7 +101,7 @@ class GoCannonOptions {
      */
     public function text_field_callback($args) {
         printf(
-            '<input type="text" id="%s" name="go-cannon_settings[%s]" value="%s">',
+            '<input type="text" id="%s" name="hectane_settings[%s]" value="%s">',
             esc_attr($args[0]),
             esc_attr($args[0]),
             esc_attr(self::get($args[0]))
@@ -113,7 +113,7 @@ class GoCannonOptions {
      */
     public function checkbox_field_callback($args) {
         printf(
-            '<input type="checkbox" id="%s" name="go-cannon_settings[%s]" %s>',
+            '<input type="checkbox" id="%s" name="hectane_settings[%s]" %s>',
             esc_attr($args[0]),
             esc_attr($args[0]),
             self::get($args[0]) ? 'checked="checked"' : ''
@@ -125,10 +125,10 @@ class GoCannonOptions {
      */
     public function add_options_page() {
         add_options_page(
-            'go-cannon Options',
-            'go-cannon',
+            'Hectane Options',
+            'hectane',
             'manage_options',
-            'go-cannon',
+            'hectane',
             array($this, 'display_options_page')
         );
     }
@@ -138,10 +138,10 @@ class GoCannonOptions {
      */
     public function display_options_page() {
         echo '<div class="wrap">';
-        echo '<h2>go-cannon Options</h2>';
+        echo '<h2>Hectane Options</h2>';
         echo '<form method="post" action="options.php">';
-        settings_fields('go-cannon_settings');
-        do_settings_sections('go-cannon');
+        settings_fields('hectane_settings');
+        do_settings_sections('hectane');
         submit_button();
         echo '</form>';
         echo '</div>';

@@ -1,22 +1,22 @@
 <?php
 
 /*
-Plugin Name: go-cannon
-Plugin URI: https://github.com/nathan-osman/wordpress-go-cannon
-Description: Deliver all WordPress emails via go-cannon.
-Version: 0.1.0
+Plugin Name: Hectane
+Plugin URI: https://github.com/hectane/hectane
+Description: Deliver all WordPress emails via Hectane.
+Version: 0.1.1
 Author: Nathan Osman
 Author URI: https://quickmediasolutions.com
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 */
 
-require_once plugin_dir_path(__FILE__) . 'go-cannon_api.php';
-require_once plugin_dir_path(__FILE__) . 'go-cannon_settings.php';
+require_once plugin_dir_path(__FILE__) . 'hectane_api.php';
+require_once plugin_dir_path(__FILE__) . 'hectane_settings.php';
 
-// Create the options instance only if the admin is open
+// Create the settings instance only if the admin is open
 if(is_admin()) {
-    new GoCannonOptions();
+    new HectaneSettings();
 }
 
 // Only override the wp_mail() function if it doesn't exist
@@ -25,7 +25,7 @@ if (!function_exists('wp_mail')) {
      * Override the default implementation of wp_mail().
      *
      * This function is responsible for marshalling the parameters into the JSON
-     * data that is sent to go-cannon.
+     * data that is sent to Hectane.
      */
     function wp_mail($to, $subject, $message, $headers='', $attachments=array()) {
         if(!is_array($to)) {
@@ -37,7 +37,7 @@ if (!function_exists('wp_mail')) {
             'subject' => $subject,
             'text' => $message,
         );
-        return GoCannonAPI::instance()->send($email);
+        return HectaneAPI::instance()->send($email);
     }
 }
 

@@ -1,11 +1,11 @@
 <?php
 
-require_once plugin_dir_path(__FILE__) . 'go-cannon_settings.php';
+require_once plugin_dir_path(__FILE__) . 'hectane_settings.php';
 
 /**
- * Facilitate communication with the go-cannon API.
+ * Facilitate communication with the Hectane API.
  */
-class GoCannonAPI {
+class HectaneAPI {
 
     /**
      * Global instance of the API.
@@ -17,7 +17,7 @@ class GoCannonAPI {
      */
     public static function instance() {
         if(self::$instance === null) {
-            self::$instance = new GoCannonAPI();
+            self::$instance = new HectaneAPI();
         }
         return self::$instance;
     }
@@ -33,16 +33,16 @@ class GoCannonAPI {
     private function build($method) {
         $url = sprintf(
             'http%s://%s:%s/v1%s',
-            GoCannonOptions::get('secure') ? 's' : '',
-            GoCannonOptions::get('host'),
-            GoCannonOptions::get('port'),
+            HectaneSettings::get('secure') ? 's' : '',
+            HectaneSettings::get('host'),
+            HectaneSettings::get('port'),
             $method
         );
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $u = GoCannonOptions::get('username');
-        $p = GoCannonOptions::get('password');
+        $u = HectaneSettings::get('username');
+        $p = HectaneSettings::get('password');
         if($u !== '' && $p !== '') {
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
             curl_setopt($ch, CURLOPT_USERPWD, "$u:$p");
@@ -66,12 +66,12 @@ class GoCannonAPI {
      */
     public function show_error() {
         echo '<div class="error">';
-        echo '<p>The cURL PHP extension is required to use go-cannon.</p>';
+        echo '<p>The cURL PHP extension is required to use Hectane.</p>';
         echo '</div>';
     }
 
     /**
-     * Attempt to send the specified email with go-cannon.
+     * Attempt to send the specified email with Hectane.
      *
      * The $email parameter is expected to be an array with the same parameters
      * that /v1/send expects. A boolean is returned indicating success or
@@ -91,7 +91,7 @@ class GoCannonAPI {
     }
 
     /**
-     * Retrieve the current version of go-cannon.
+     * Retrieve the current version of Hectane.
      *
      * The version is returned as a string or the value "false" if an error
      * occurs while making the API call.
