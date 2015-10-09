@@ -126,7 +126,7 @@ class HectaneSettings {
     public function add_options_page() {
         add_options_page(
             'Hectane Options',
-            'hectane',
+            'Hectane',
             'manage_options',
             'hectane',
             array($this, 'display_options_page')
