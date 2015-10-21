@@ -33,7 +33,7 @@ class HectaneAPI {
     private function build($method) {
         $url = sprintf(
             'http%s://%s:%s/v1%s',
-            HectaneSettings::get('secure') ? 's' : '',
+            HectaneSettings::get('tls') ? 's' : '',
             HectaneSettings::get('host'),
             HectaneSettings::get('port'),
             $method
@@ -46,6 +46,10 @@ class HectaneAPI {
         if($u !== '' && $p !== '') {
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
             curl_setopt($ch, CURLOPT_USERPWD, "$u:$p");
+        }
+        if(HectaneSettings::get('tls_ignore')) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
         return $ch;
     }

@@ -13,6 +13,7 @@ class HectaneSettings {
         'host' => 'localhost',
         'port' => '8025',
         'tls' => '0',
+        'tls_ignore' => '0',
         'username' => '',
         'password' => '',
     );
@@ -66,6 +67,14 @@ class HectaneSettings {
             'hectane',
             'hectane_connection_settings',
             array('tls')
+        );
+        add_settings_field(
+            'tls_ignore',
+            'Ignore TLS errors',
+            array($this, 'checkbox_field_callback'),
+            'hectane',
+            'hectane_connection_settings',
+            array('tls_ignore')
         );
         add_settings_field(
             'username',
