@@ -38,6 +38,36 @@ if (!function_exists('wp_mail')) {
     }
 
     /**
+     * Turn headers into an associative array.
+     *
+     * This function work both is headers are passed as an array or a string
+     * (compliant with wp_mail's $headers parameter).
+     */
+    function hectane_parseHeaders($headers) {
+        if (is_string($headers))
+            $headers = preg_split("/\\r\\n|\\r|\\n/", $headers);
+        $ret = array();
+        foreach ($headers as $header) {
+            $keyvalue = explode(': ', $header);
+            if (count($keyvalue) == 2)
+                $ret[$keyvalue[0]] = $keyvalue[1];
+        }
+        return $ret;
+    }
+
+    /**
+     * Return the content of email's 'From' field.
+     */
+    function hectane_emailFrom($headers) {
+        if(isset($headers['From'])) {
+            return $headers['From'];
+        }
+        else {
+            return sprintf('WordPress <wordpress@%s>', $_SERVER['SERVER_NAME']);
+        }
+    }
+
+    /**
      * Override the default implementation of wp_mail().
      *
      * This function is responsible for marshalling the parameters into the JSON
@@ -47,8 +77,9 @@ if (!function_exists('wp_mail')) {
         if(!is_array($to)) {
             $to = array($to);
         }
+        $headers = hectane_parseHeaders($headers);
         $email = array(
-            'from' => sprintf('WordPress <wordpress@%s>', $_SERVER['SERVER_NAME']),
+            'from' => hectane_emailFrom($headers),
             'to' => is_array($to) ? $to : array($to),
             'subject' => $subject
         );
