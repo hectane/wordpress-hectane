@@ -4,7 +4,7 @@
 Plugin Name: Hectane
 Plugin URI: https://github.com/hectane/hectane
 Description: Deliver all WordPress emails via Hectane.
-Version: 0.1.3
+Version: 0.1.4
 Author: Nathan Osman
 Author URI: https://quickmediasolutions.com
 License: MIT

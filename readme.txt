@@ -3,7 +3,7 @@ Contributors: george_edison
 Tags: mail, email
 Requires at least: 3.0.1
 Tested up to: 4.3.1
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -20,6 +20,9 @@ This plugin provides an extremely easy way to route WordPress emails through [He
 1. Configure the plugin through the 'Hectane' item in the Settings' menu.
 
 == Changelog ==
+
+= 0.1.4 =
+* Extract "From" field from headers if present
 
 = 0.1.3 =
 * Plugin now auto-detects HTML
