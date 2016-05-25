@@ -78,10 +78,13 @@ if (!function_exists('wp_mail')) {
             $to = array($to);
         }
         $headers = hectane_parseHeaders($headers);
+        $from = hectane_emailFrom($headers);
+        unset($headers['From']);
         $email = array(
-            'from' => hectane_emailFrom($headers),
+            'from' => $from,
             'to' => is_array($to) ? $to : array($to),
-            'subject' => $subject
+            'subject' => $subject,
+            'headers' => $headers
         );
         if (hectane_isMessageHtml($message)) {
             $email['html'] = $message;
