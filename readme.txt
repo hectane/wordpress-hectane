@@ -2,8 +2,8 @@
 Contributors: george_edison
 Tags: mail, email
 Requires at least: 3.0.1
-Tested up to: 4.3.1
-Stable tag: 0.1.4
+Tested up to: 4.5.3
+Stable tag: 0.1.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -20,6 +20,13 @@ This plugin provides an extremely easy way to route WordPress emails through [He
 1. Configure the plugin through the 'Hectane' item in the Settings' menu.
 
 == Changelog ==
+
+= 0.1.6 =
+* Split up settings
+* Fixed header bug
+
+= 0.1.5 =
+* Additional MIME headers are passed to Hectane
 
 = 0.1.4 =
 * Extract "From" field from headers if present
