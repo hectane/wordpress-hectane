@@ -38,6 +38,8 @@ class HectaneSettings {
      * Register the section and individual settings.
      */
     public function register_settings() {
+
+        // Connection settings
         add_settings_section(
             'hectane_connection_settings',
             'Connection Settings',
@@ -68,20 +70,20 @@ class HectaneSettings {
             'hectane_connection_settings',
             array('tls')
         );
-        add_settings_field(
-            'tls_ignore',
-            'Ignore TLS errors',
-            array($this, 'checkbox_field_callback'),
-            'hectane',
-            'hectane_connection_settings',
-            array('tls_ignore')
+
+        // Authentication settings
+        add_settings_section(
+            'hectane_auth_settings',
+            'Authentication Settings',
+            array($this, 'auth_settings_callback'),
+            'hectane'
         );
         add_settings_field(
             'username',
             'Username',
             array($this, 'text_field_callback'),
             'hectane',
-            'hectane_connection_settings',
+            'hectane_auth_settings',
             array('username')
         );
         add_settings_field(
@@ -89,9 +91,28 @@ class HectaneSettings {
             'Password',
             array($this, 'text_field_callback'),
             'hectane',
-            'hectane_connection_settings',
+            'hectane_auth_settings',
             array('password')
         );
+
+
+        // Behavior settings
+        add_settings_section(
+            'hectane_behavior_settings',
+            'Behavior Settings',
+            array($this, 'behavior_settings_callback'),
+            'hectane'
+        );
+        add_settings_field(
+            'tls_ignore',
+            'Ignore TLS errors',
+            array($this, 'checkbox_field_callback'),
+            'hectane',
+            'hectane_behavior_settings',
+            array('tls_ignore')
+        );
+
+
         register_setting(
             'hectane_settings',
             'hectane_settings'
@@ -103,6 +124,20 @@ class HectaneSettings {
      */
     public function connection_settings_callback() {
         echo '<p>These settings are used to connect to the Hectane client.</p>';
+    }
+
+    /**
+     * Render the label for the auth section.
+     */
+    public function auth_settings_callback() {
+        echo '<p>These settings are used to authenticate with the Hectane server.</p>';
+    }
+
+    /**
+     * Render the label for the behavior section.
+     */
+    public function behavior_settings_callback() {
+        echo '<p>These settings are used to adjust behavior during transmission.</p>';
     }
 
     /**

@@ -4,7 +4,7 @@
 Plugin Name: Hectane
 Plugin URI: https://github.com/hectane/hectane
 Description: Deliver all WordPress emails via Hectane.
-Version: 0.1.4
+Version: 0.1.6
 Author: Nathan Osman
 Author URI: https://quickmediasolutions.com
 License: MIT
@@ -40,7 +40,7 @@ if (!function_exists('wp_mail')) {
     /**
      * Turn headers into an associative array.
      *
-     * This function work both is headers are passed as an array or a string
+     * This function works both when headers are passed as an array or a string
      * (compliant with wp_mail's $headers parameter).
      */
     function hectane_parseHeaders($headers) {
@@ -59,7 +59,7 @@ if (!function_exists('wp_mail')) {
      * Return the content of email's 'From' field.
      */
     function hectane_emailFrom($headers) {
-        if(isset($headers['From'])) {
+        if (isset($headers['From'])) {
             return $headers['From'];
         }
         else {
@@ -84,7 +84,7 @@ if (!function_exists('wp_mail')) {
             'from' => $from,
             'to' => is_array($to) ? $to : array($to),
             'subject' => $subject,
-            'headers' => $headers
+            'headers' => $headers ? $headers : new stdClass()
         );
         if (hectane_isMessageHtml($message)) {
             $email['html'] = $message;
